@@ -134,7 +134,16 @@
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: goldAnimation 7s ease infinite;
+            animation: goldAnimation 60s ease infinite;
+        }
+
+        .accommodation-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f9f5ecc7;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes goldAnimation {
@@ -150,8 +159,8 @@
         }
 
         @media (max-width: 768px) {
-            .main-content {
-                padding: 1.5rem;
+            .main-body {
+                justify-content: flex-start;
             }
 
             .rsvp-button {
@@ -194,45 +203,22 @@
     </nav>
 
     <div class="main-body">
-        <div class="main-content">
-            <div class="names-container">
-                <h2 class="name-text gold-foil">sanam</h2>
-                <div class="ampersand gold-foil">&</div>
-                <h2 class="name-text gold-foil">pranav</h2>
-            </div>
-            <div class="bottom-section">
-                <p class="date gold-foil">June 27, 2025</p>
-                <p class="location gold-foil">Bartlett, Illinois</p>
-                <div class="countdown gold-foil" id="countdown-timer">Loading countdown...</div>
-                <a href="rsvp.html">
-                    <button class="rsvp-button">RSVP</button>
+        <div class="accommodation-container">
+            <p class="date gold-foil">Holiday Inn & Suites Chicago-Carol Stream (Wheaton)</p>
+            <p class="location gold-foil">
+                <a href="https://maps.app.goo.gl/A57hprjRe31AUjYr5" 
+                    class="gold-foil" 
+                    target="_blank">
+                    150 South Gary Avenue, Carol Stream, IL 60188
                 </a>
-            </div>
+            </p>
+            <p class="location gold-foil">
+                <a href="https://www.ihg.com/holidayinn/hotels/us/en/find-hotels/select-roomrate?qDest=Holiday%20Inn%20&qPt=CASH&qCiD=25&qCoD=28&qCiMy=052025&qCoMy=052025&qAdlt=1&qChld=0&qRms=1&qRtP=6CBARC&qGrpCd=P23&qSlH=CSRIL&srb_u=1&qSrt=sBR&qBrs=6c.hi.ex.sb.ul.ic.cp.cw.in.vn.cv.rs.ki.kd.ma.sp.va.sp.re.vx.nd.sx.we.lx.rn.sn.sn.sn.sn.sn.nu&qWch=0&qSmP=0&qRad=30&qRdU=mi&setPMCookies=false&qpMbw=0&qErm=false&qpMn=0&qRmFltr=" class="gold-foil" target="_blank">Click here to book online!</a>
+            </p>
+            <p class="location gold-foil">For reservation over the phone call hotel at <a href="tel:+16306653000" class="gold-foil">+1 630-665-3000</a> and book rooms with group booking of Patel Wedding Block or group code P23.</p>
+            
         </div>
     </div>
-
-    <script>
-        function countdown() {
-            const weddingDate = new Date('June 27, 2025 00:00:00').getTime();
-            const timer = setInterval(function() {
-                const now = new Date().getTime();
-                const distance = weddingDate - now;
-
-                if (distance <= 0) {
-                    clearInterval(timer);
-                    document.getElementById("countdown-timer").innerText = "The big day is here!";
-                } else {
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    document.getElementById("countdown-timer").innerText = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
-                }
-            }, 1000);
-        }
-
-        window.onload = countdown;
-    </script>
 
 </body>
 </html>
