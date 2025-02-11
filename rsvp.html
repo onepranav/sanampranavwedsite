@@ -252,13 +252,13 @@
                 </div>
             
                 <label for="full-name" class="gold-foil">What is your full name?</label>
-                <input type="text" id="full-name" name="entry.877086558" required>
+                <input type="text" id="full-name" name="entry.877086558" placeholder="Enter full name" required>
             
                 <label for="contact-number" class="gold-foil">Your contact number?</label>
-                <input type="tel" id="contact-number" name="entry.147559323" required>
+                <input type="tel" id="contact-number" name="entry.147559323" placeholder="xxx-xxx-xxxx" maxlength="12" required>
             
                 <label for="attendees" class="gold-foil">How many people will be attending from your family?</label>
-                <input type="text" id="attendees" name="entry.1498135098" required>
+                <input type="text" id="attendees" name="entry.1498135098" placeholder="Enter number" maxlength="2" required>
             
                 <button type="submit" class="submit-button">Submit</button>
             </form>
@@ -269,9 +269,31 @@
             </div>
             
             <script>
+
+                document.getElementById('contact-number').addEventListener('input', function(event) {
+                    let input = event.target.value.replace(/\D/g, ''); // Remove all non-digit characters
+
+                    // Format as xxx-xxx-xxxx
+                    if (input.length > 3 && input.length <= 6) {
+                        input = `${input.slice(0, 3)}-${input.slice(3)}`;
+                    } else if (input.length > 6) {
+                        input = `${input.slice(0, 3)}-${input.slice(3, 6)}-${input.slice(6, 10)}`;
+                    }
+
+                    event.target.value = input;
+                });
+
+                document.getElementById('attendees').addEventListener('input', function(event) {
+                    const input = event.target;
+                    if (!/^\d*$/.test(input.value)) {
+                        input.value = ''; // Clear input if non-numeric value is entered
+                        input.placeholder = 'Enter number'; // Update placeholder message
+                    }
+                });
+            
                 document.getElementById('rsvp-form').addEventListener('submit', async function(event) {
                     event.preventDefault(); // Prevent the default form submission
-                    
+            
                     // Gather form data
                     const formData = new FormData(this);
                     
@@ -292,7 +314,7 @@
                         alert('There was an issue submitting your response. Please try again later.');
                     }
                 });
-            </script>            
+            </script>  
             
         </div>
     </div>
