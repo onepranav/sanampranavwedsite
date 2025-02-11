@@ -106,7 +106,7 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
-            background-color: #f9f5ec;
+            background-color: #f9f5ecc7;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
@@ -237,30 +237,63 @@
 
     <div class="main-body">
         <div class="rsvp-container">
-            <form>
-                <label class="gold-foil">Which side of the family are you RSVPing for?</label>
+            
+            <form id="rsvp-form">
+                <label class="gold-foil">Which family are you joining for this celebration?</label>
                 <div class="modern-toggle">
                     <div class="toggle-option">
-                        <input type="radio" id="sanam-side" name="family-side" value="Sanam" required>
+                        <input type="radio" id="sanam-side" name="entry.692155006" value="Sanam's Side" required>
                         <label for="sanam-side">Sanam's Side</label>
                     </div>
                     <div class="toggle-option">
-                        <input type="radio" id="pranav-side" name="family-side" value="Pranav" required>
+                        <input type="radio" id="pranav-side" name="entry.692155006" value="Pranav's Side" required>
                         <label for="pranav-side">Pranav's Side</label>
                     </div>
                 </div>
-
+            
                 <label for="full-name" class="gold-foil">What is your full name?</label>
-                <input type="text" id="full-name" name="full-name" required>
-
+                <input type="text" id="full-name" name="entry.877086558" required>
+            
                 <label for="contact-number" class="gold-foil">Your contact number?</label>
-                <input type="tel" id="contact-number" name="contact-number" required>
-
+                <input type="tel" id="contact-number" name="entry.147559323" required>
+            
                 <label for="attendees" class="gold-foil">How many people will be attending from your family?</label>
-                <input type="text" id="attendees" name="attendees" required>
-
+                <input type="text" id="attendees" name="entry.1498135098" required>
+            
                 <button type="submit" class="submit-button">Submit</button>
             </form>
+            
+            <div id="thank-you-message" style="display:none; font-family: 'Libre Baskerville', serif; font-size: 1.5rem; margin-top: 2rem;">
+                Thank you for RSVP! 
+                We look forward to celebrating with you.
+            </div>
+            
+            <script>
+                document.getElementById('rsvp-form').addEventListener('submit', async function(event) {
+                    event.preventDefault(); // Prevent the default form submission
+                    
+                    // Gather form data
+                    const formData = new FormData(this);
+                    
+                    try {
+                        // Use fetch to send POST request to Google Form URL
+                        const response = await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdtfLVOXm9IXNFnc_vvUubBzrUuS7jnLIntvQfcXA8hU45Spw/formResponse', {
+                            method: 'POST',
+                            body: formData,
+                            mode: 'no-cors' // Allows submission but prevents reading response due to CORS policy
+                        });
+            
+                        // Show thank-you message and hide form
+                        document.getElementById('rsvp-form').style.display = 'none';
+                        document.getElementById('thank-you-message').style.display = 'block';
+            
+                    } catch (error) {
+                        console.error('Error submitting form:', error);
+                        alert('There was an issue submitting your response. Please try again later.');
+                    }
+                });
+            </script>            
+            
         </div>
     </div>
 
