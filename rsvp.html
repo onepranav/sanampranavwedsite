@@ -26,6 +26,10 @@
 
         nav {
             margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allows wrapping if needed */
+            gap: 20px; /* Adds spacing instead of breaking awkwardly */
         }
 
         nav a {
@@ -84,7 +88,7 @@
         }
 
         .gold-foil {
-            background: linear-gradient(45deg, #f9d976, #f39c12, #e1ad01, #f6e27d);
+            background: linear-gradient(45deg, #e8af49, #d4981e, #b87c0d, #f6c453);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -160,8 +164,9 @@
             border-radius: 20px;
             cursor: pointer;
             font-family: 'Libre Baskerville', serif;
-            font-size: 1rem;
+            font-size: 1.25rem;
             transition: all 0.3s ease;
+            margin-top: 5%;
         }
 
         .toggle-option input:checked + label {
@@ -230,10 +235,11 @@
     <header class="gold-foil">sanam & pranav</header>
 
     <nav>
-        <a href="index.html" class="gold-foil">Home</a>
+        <a href="index.html" class="gold-foil">The Big Day</a>
         <!-- <a href="#schedule" class="gold-foil">Schedule</a> -->
         <a href="accommodation.html" class="gold-foil">Accommodation</a>
         <a href="rsvp.html" class="gold-foil">RSVP</a>
+        <a href="localAdventures.html" class="gold-foil">Local Adventures</a>
     </nav>
 
     <div class="main-body">

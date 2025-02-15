@@ -26,6 +26,10 @@
 
         nav {
             margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allows wrapping if needed */
+            gap: 20px; /* Adds spacing instead of breaking awkwardly */
         }
 
         nav a {
@@ -34,6 +38,12 @@
             font-weight: 400;
             font-size: clamp(1rem, 2.5vw, 1.25rem);
             padding: 0 1.5rem;
+            position: relative;
+        }
+
+        nav a.active {
+            text-decoration: underline;
+            font-weight: bold;
         }
 
         nav a:hover {
@@ -94,14 +104,14 @@
             font-family: 'EB Garamond', serif;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-size: clamp(2rem, 4vw, 2.5rem);
             margin-top: 0.5rem;
         }
 
         .location {
             font-family: 'Libre Baskerville', serif;
             font-weight: 200;
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-size: clamp(1.5rem, 2.5vw, 1.5rem);
             margin-top: 1.25rem;
         }
 
@@ -130,7 +140,7 @@
         }
 
         .gold-foil {
-            background: linear-gradient(45deg, #f9d976, #f39c12, #e1ad01, #f6e27d);
+            background: linear-gradient(45deg, #e8af49, #d4981e, #b87c0d, #f6c453);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -187,10 +197,11 @@
     <header class="gold-foil">sanam & pranav</header>
 
     <nav>
-        <a href="index.html" class="gold-foil">Home</a>
+        <a href="index.html" class="gold-foil">The Big Day</a>
         <!-- <a href="#schedule" class="gold-foil">Schedule</a> -->
         <a href="accommodation.html" class="gold-foil">Accommodation</a>
         <a href="rsvp.html" class="gold-foil">RSVP</a>
+        <a href="localAdventures.html" class="gold-foil">Local Adventures</a>
     </nav>
 
     <div class="main-body">
