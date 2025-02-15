@@ -263,9 +263,12 @@
             
                 <label for="contact-number" class="gold-foil">Your contact number?</label>
                 <input type="tel" id="contact-number" name="entry.147559323" placeholder="xxx-xxx-xxxx" maxlength="12" required>
-            
-                <label for="attendees" class="gold-foil">How many people will be attending from your family?</label>
-                <input type="text" id="attendees" name="entry.1498135098" placeholder="Enter number" maxlength="2" required>
+                
+                <label for="wedding-attendees" class="gold-foil" id="weddingAttendeesLabel">How many people will be attending the Grah Shanti from your family?</label>
+                <input type="text" id="wedding-attendees" name="entry.1498135098" placeholder="Enter number" maxlength="2" required>
+
+                <label for="attendees" class="gold-foil">How many people will be attending the Wedding from your family?</label>
+                <input type="text" id="attendees" name="entry.789342749" placeholder="Enter number" maxlength="2" required>
             
                 <button type="submit" class="submit-button">Submit</button>
             </form>
@@ -339,6 +342,34 @@
                 }
             });
 
+            document.addEventListener("DOMContentLoaded", function () {
+                function getUrlParameter(name) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    return urlParams.get(name);
+                }
+
+                // Check the URL for "invite" parameter
+                const inviteType = getUrlParameter("invite");
+
+                if (inviteType) {
+                    // Store the invite type in localStorage
+                    localStorage.setItem("inviteType", inviteType);
+                }
+
+                // Retrieve stored invite type
+                const storedInvite = localStorage.getItem("inviteType");
+
+                // Hide question #4 if invite type is "wedding"
+                if (storedInvite === "wedding") {
+                    document.getElementById("weddingAttendeesLabel").style.display = "none";
+                    document.getElementById("wedding-attendees").style.display = "none";
+                }
+                // UNHIDE question #4 if "invite=wedding-celebrations"
+                else if (storedInvite === "wedding-celebrations") {
+                    document.getElementById("weddingAttendeesLabel").style.display = "block";
+                    document.getElementById("wedding-attendees").style.display = "block";
+                }
+            });
                 
             </script>  
             
