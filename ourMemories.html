@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" as="image" href="wedding backdrop.png">
+    <title>Sanam & Pranav's Wedding</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            color: #4b4b4b;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        header {
+            padding: 2rem 0;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-family: 'EB Garamond', serif;
+            text-transform: uppercase;
+            line-height: 1.3;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allows wrapping if needed */
+            gap: 20px; /* Adds spacing instead of breaking awkwardly */
+        }
+
+        nav a {
+            text-decoration: none;
+            font-family: 'Libre Baskerville', serif;
+            font-weight: 400;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            padding: 0 1.5rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .main-body {
+            background: url('wedding backdrop.png') no-repeat 50% 20% scroll;
+            background-size: cover;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5% 5%;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        .main-content {
+            max-width: 800px;
+            padding: 2rem;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .names-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bottom-section {
+            padding-top: 30%;
+        }
+
+        .name-text {
+            font-family: 'EB Garamond', serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin: 0;
+        }
+
+        .ampersand {
+            font-family: 'Libre Baskerville', serif;
+            font-weight: 400;
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            padding: 2rem 0;
+        }
+
+        .date {
+            font-family: 'EB Garamond', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-top: 0.5rem;
+        }
+
+        .location {
+            font-family: 'Libre Baskerville', serif;
+            font-weight: 200;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            margin-top: 1.25rem;
+        }
+
+        .countdown {
+            font-family: 'Libre Baskerville', serif;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            margin-top: 0.5rem;
+        }
+
+        .rsvp-button {
+            background-color: #1d3c34;
+            color: #f6e27d;
+            font-family: 'Libre Baskerville', serif;
+            padding: 1rem 3rem;
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            border: 2px solid #f6e27d;
+            cursor: pointer;
+            border-radius: 30px;
+            margin-top: 2rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .rsvp-button:hover {
+            background-color: #162e29;
+            transform: scale(1.05);
+        }
+
+        .gold-foil {
+            background: linear-gradient(45deg, #e8af49, #d4981e, #b87c0d, #f6c453);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldAnimation 60s ease infinite;
+        }
+
+        .ourMemories-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f9f5ecc7;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes goldAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-body {
+                justify-content: flex-start;
+            }
+
+            .rsvp-button {
+                padding: 0.5rem 1.75rem;
+                font-size: 1rem;
+            }
+
+            .names-container {
+                margin-top: -30%;
+                margin-bottom: 20%;
+            }
+
+            nav {
+                padding: 0.5rem 0;
+            }
+
+            nav a {
+                padding: 0 0.75rem;
+            }
+
+            .date {
+                margin-top: 0.5rem;
+            }
+
+            .location {
+                margin-top: 0.75rem;
+            }
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 0;
+            width: -webkit-fill-available;
+            background: rgba(0, 0, 0, 0.7); /* Darker overlay for better readability */
+            color: #f6c453;
+            text-align: center;
+            padding: 12px 15px;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1rem;
+            line-height: 1.4;
+            border-radius: 0 0 10px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50px; /* Ensures enough space for text */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+        }
+
+        /* Make the caption appear on hover */
+        .gallery-item:hover .caption {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="gold-foil">sanam & pranav</header>
+
+    <nav>
+        <a href="index.html" class="gold-foil">The Big Day</a>
+        <!-- <a href="#schedule" class="gold-foil">Schedule</a> -->
+        <a href="accommodation.html" class="gold-foil">Accommodation</a>
+        <a href="rsvp.html" class="gold-foil">RSVP</a>
+        <a href="localAdventures.html" class="gold-foil">Local Adventures</a>
+        <a href="ourMemories.html" class="gold-foil">Our Memories</a>
+    </nav>
+
+    <div class="main-body">
+        <div class="ourMemories-container">
+            <div class="photo-gallery">
+                <div class="gallery-item">
+                    <img src="our memories/1000020607.JPG" alt="epic">
+                    <p class="caption">Plot twist: That first meeting was the beginning of an epic rom-com. 🎬💕</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="our memories/1000042646.jpg" alt="picnic">
+                    <p class="caption">A picnic and a crash course in each other’s quirks. 🍉😆</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="our memories/1000119390.jpg" alt="dating’">
+                    <p class="caption">From ‘just dating’ to ‘start planning the wedding’ overnight. 💍🎉</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="our memories/1000060206.JPG" alt="masterpiece…">
+                    <p class="caption">Two artists, one masterpiece… and a whole lot of paint on our clothes. 🎨❤️</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="our memories/1000089645.jpg" alt="snowman">
+                    <p class="caption">They say love builds great things… just not this snowman. ⛄😂</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="our memories/1000089795.jpg" alt="horsepower">
+                    <p class="caption">Taking the scenic route… with horsepower. 🐎✨</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="our memories/IMG_8555.jpg" alt="forever—this">
+                    <p class="caption">Some moments change your life forever—this was one of them. 🌅💍</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="our memories/IMG_9898.jpg" alt="mehndi">
+                    <p class="caption">Marked for life… by mehndi and by love. ❤️</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="our memories/IMG_9561.jpg" alt="happily ever after">
+                    <p class="caption">Practicing our ‘happily ever after’ smiles. 😊</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
