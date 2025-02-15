@@ -265,7 +265,7 @@
                 <input type="tel" id="contact-number" name="entry.147559323" placeholder="xxx-xxx-xxxx" maxlength="12" required>
                 
                 <label for="wedding-attendees" class="gold-foil" id="weddingAttendeesLabel">How many people will be attending the Grah Shanti from your family?</label>
-                <input type="text" id="wedding-attendees" name="entry.1498135098" placeholder="Enter number" maxlength="2">
+                <input type="text" id="wedding-attendees" name="entry.1498135098" placeholder="Enter number" maxlength="2" required>
 
                 <label for="attendees" class="gold-foil">How many people will be attending the Wedding from your family?</label>
                 <input type="text" id="attendees" name="entry.789342749" placeholder="Enter number" maxlength="2" required>
@@ -363,6 +363,9 @@
                 if (storedInvite === "wedding") {
                     document.getElementById("weddingAttendeesLabel").style.display = "none";
                     document.getElementById("wedding-attendees").style.display = "none";
+
+                    // Set the input value to zero
+                    document.getElementById("wedding-attendees").value = "0";
                 }
                 // UNHIDE question #4 if "invite=wedding-celebrations"
                 else if (storedInvite === "wedding-celebrations") {
