@@ -192,6 +192,13 @@
             transform: scale(1.05);
         }
 
+        .welcome-highlight {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: block; /* Ensures it appears on a new line */
+            line-height: 2;
+        }
+
         @media (max-width: 768px) {
             .main-content {
                 padding: 1.5rem;
@@ -246,33 +253,58 @@
     <div class="main-body">
         <div class="rsvp-container">
             
-            <form id="rsvp-form">
-                <label class="gold-foil">Which family are you joining for this celebration?</label>
-                <div class="modern-toggle">
-                    <div class="toggle-option">
-                        <input type="radio" id="sanam-side" name="entry.692155006" value="Sanam's Side" >
-                        <label for="sanam-side">Sanam's Side</label>
+            <div id="default-form" style="display: none;">
+                <form id="rsvp-form">
+                    <label class="gold-foil">Which family are you joining for this celebration?</label>
+                    <div class="modern-toggle">
+                        <div class="toggle-option">
+                            <input type="radio" id="sanam-side" name="entry.692155006" value="Sanam's Side" >
+                            <label for="sanam-side">Sanam's Side</label>
+                        </div>
+                        <div class="toggle-option">
+                            <input type="radio" id="pranav-side" name="entry.692155006" value="Pranav's Side" >
+                            <label for="pranav-side">Pranav's Side</label>
+                        </div>
                     </div>
-                    <div class="toggle-option">
-                        <input type="radio" id="pranav-side" name="entry.692155006" value="Pranav's Side" >
-                        <label for="pranav-side">Pranav's Side</label>
-                    </div>
-                </div>
-            
-                <label for="full-name" class="gold-foil">What is your full name?</label>
-                <input type="text" id="full-name" name="entry.877086558" placeholder="Enter full name" required>
-            
-                <label for="contact-number" class="gold-foil">Your contact number?</label>
-                <input type="tel" id="contact-number" name="entry.147559323" placeholder="xxx-xxx-xxxx" maxlength="12" required>
                 
-                <label for="wedding-attendees" class="gold-foil" id="weddingAttendeesLabel">How many people will be attending the Grah Shanti from your family?</label>
-                <input type="text" id="wedding-attendees" name="entry.1498135098" placeholder="Enter number" maxlength="2" required>
+                    <label for="full-name" class="gold-foil">What is your full name?</label>
+                    <input type="text" id="full-name" name="entry.877086558" placeholder="Enter full name" required>
+                
+                    <label for="contact-number" class="gold-foil">Your contact number?</label>
+                    <input type="tel" id="contact-number" name="entry.147559323" placeholder="xxx-xxx-xxxx" maxlength="12" required>
+                    
+                    <label for="wedding-attendees" class="gold-foil" id="weddingAttendeesLabel">How many people will be attending the Grah Shanti from your family?</label>
+                    <input type="text" id="wedding-attendees" name="entry.1498135098" placeholder="Enter number" maxlength="2" required>
 
-                <label for="attendees" class="gold-foil">How many people will be attending the Wedding from your family?</label>
-                <input type="text" id="attendees" name="entry.789342749" placeholder="Enter number" maxlength="2" required>
-            
-                <button type="submit" class="submit-button">Submit</button>
-            </form>
+                    <label for="attendees" class="gold-foil">How many people will be attending the Wedding from your family?</label>
+                    <input type="text" id="attendees" name="entry.789342749" placeholder="Enter number" maxlength="2" required>
+                
+                    <button type="submit" class="submit-button">Submit</button>
+                </form>
+            </div>
+
+            <div id="custom-form" style="display: none;">
+
+                <div id="welcome-section">
+                    <p class="gold-foil" id="welcome-message"></p>
+                    <p class="gold-foil">Please confirm your RSVP below.</p>
+                </div>
+
+                <form id="custom-rsvp-form">
+                    <!-- Hidden Fields for Auto-Filled Questions -->
+                    <input type="hidden" id="family-side" name="entry.692155006">
+                    <input type="hidden" id="full-name" name="entry.877086558">
+                    <input type="hidden" id="contact-number" name="entry.147559323">
+                
+                    <label for="wedding-attendees" class="gold-foil" id="weddingAttendeesLabel">How many people will be attending the Grah Shanti from your family?</label>
+                    <select id="wedding-attendees" name="entry.1498135098"></select>
+
+                    <label for="attendees" class="gold-foil">How many people will be attending the Wedding from your family?</label>
+                    <select id="attendees" name="entry.789342749"></select>
+                
+                    <button type="button" id="custom-submit-button" class="submit-button">Submit</button>
+                </form>
+            </div>
             
             <div id="thank-you-message" style="display:none; font-family: 'Libre Baskerville', serif; font-size: 1.5rem; margin-top: 2rem;" class="gold-foil">
                 Thank you for RSVP! 
@@ -294,6 +326,14 @@
                     event.target.value = input;
                 });
 
+                document.getElementById('wedding-attendees').addEventListener('input', function(event) {
+                    const input = event.target;
+                    if (!/^\d*$/.test(input.value)) {
+                        input.value = ''; // Clear input if non-numeric value is entered
+                        input.placeholder = 'Enter number'; // Update placeholder message
+                    }
+                });
+
                 document.getElementById('attendees').addEventListener('input', function(event) {
                     const input = event.target;
                     if (!/^\d*$/.test(input.value)) {
@@ -303,77 +343,231 @@
                 });
             
                 document.getElementById('rsvp-form').addEventListener('submit', async function(event) {
-                event.preventDefault(); // Prevent the default form submission
+                    event.preventDefault(); // Prevent the default form submission
 
-                // Validate family selection
-                const familySelected = document.querySelector('input[name="entry.692155006"]:checked');
-                const familyLabel = document.querySelector('label.gold-foil');
+                    console.log("regular submit btn");
 
-                if (!familySelected) {
-                    // Apply red gradient with gold foil effect to the label
-                    familyLabel.style.background = 'linear-gradient(45deg, #ff0000, #ff6347, #e52b50, #ff6666)';
+                    // Validate family selection
+                    const familySelected = document.querySelector('input[name="entry.692155006"]:checked');
+                    const familyLabel = document.querySelector('label.gold-foil');
+
+                    if (!familySelected) {
+                        // Apply red gradient with gold foil effect to the label
+                        familyLabel.style.background = 'linear-gradient(45deg, #ff0000, #ff6347, #e52b50, #ff6666)';
+                        familyLabel.style.webkitBackgroundClip = 'text';
+                        familyLabel.style.webkitTextFillColor = 'transparent';
+                        return;
+                    }
+
+                    // Reset label color if valid
+                    familyLabel.style.background = 'linear-gradient(45deg, #f9d976, #f39c12, #e1ad01, #f6e27d)';
                     familyLabel.style.webkitBackgroundClip = 'text';
                     familyLabel.style.webkitTextFillColor = 'transparent';
-                    return;
-                }
 
-                // Reset label color if valid
-                familyLabel.style.background = 'linear-gradient(45deg, #f9d976, #f39c12, #e1ad01, #f6e27d)';
-                familyLabel.style.webkitBackgroundClip = 'text';
-                familyLabel.style.webkitTextFillColor = 'transparent';
+                    // Gather form data
+                    const formData = new FormData(this);
 
-                // Gather form data
-                const formData = new FormData(this);
+                    try {
+                        // Use fetch to send POST request to Google Form URL
+                        const response = await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdtfLVOXm9IXNFnc_vvUubBzrUuS7jnLIntvQfcXA8hU45Spw/formResponse', {
+                            method: 'POST',
+                            body: formData,
+                            mode: 'no-cors' // Allows submission but prevents reading response due to CORS policy
+                        });
 
-                try {
-                    // Use fetch to send POST request to Google Form URL
-                    const response = await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdtfLVOXm9IXNFnc_vvUubBzrUuS7jnLIntvQfcXA8hU45Spw/formResponse', {
-                        method: 'POST',
-                        body: formData,
-                        mode: 'no-cors' // Allows submission but prevents reading response due to CORS policy
+                        // Show thank-you message and hide form
+                        document.getElementById('rsvp-form').style.display = 'none';
+                        document.getElementById('thank-you-message').style.display = 'block';
+
+                    } catch (error) {
+                        console.error('Error submitting form:', error);
+                        alert('There was an issue submitting your response. Please try again later.');
+                    }
+                });
+
+                document.getElementById('custom-submit-button').addEventListener('click', function () {
+                    document.querySelector("#custom-rsvp-form").dispatchEvent(new Event("custom-submit"));
+                });
+
+                document.getElementById('custom-rsvp-form').addEventListener('custom-submit', async function(event) {
+                    event.preventDefault(); // Prevent the default form submission
+
+                    console.log("custom submit btn");
+
+                    // Gather form data
+                    const formData = new FormData(this);
+
+                    // // **Log Values Before Submission**
+                    // console.log("Logging form values before submission:");
+                    // for (const pair of formData.entries()) {
+                    //     console.log(`${pair[0]}: ${pair[1]}`);
+                    // }
+
+                    // // **Check for Missing Required Fields**
+                    // const missingFields = [];
+                    // if (!formData.get("entry.692155006")) missingFields.push("Family Side");
+                    // if (!formData.get("entry.877086558")) missingFields.push("Full Name");
+                    // if (!formData.get("entry.147559323")) missingFields.push("Contact Number");
+                    // if (!formData.get("entry.1498135098")) missingFields.push("Grah Shanti Number");
+                    // if (!formData.get("entry.789342749")) missingFields.push("Wedding Number");
+
+                    // if (missingFields.length > 0) {
+                    //     alert("Missing required fields: " + missingFields.join(", "));
+                    //     return;
+                    // }
+
+                    try {
+                        // Use fetch to send POST request to Google Form URL
+                        const response = await fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSdtfLVOXm9IXNFnc_vvUubBzrUuS7jnLIntvQfcXA8hU45Spw/formResponse', {
+                            method: 'POST',
+                            body: formData,
+                            mode: 'no-cors' // Allows submission but prevents reading response due to CORS policy
+                        });
+
+                        // Show thank-you message and hide form
+                        document.getElementById('custom-rsvp-form').style.display = 'none';
+                        document.querySelector("#custom-form #welcome-section").style.display = 'none';
+                        document.getElementById('thank-you-message').style.display = 'block';
+
+                    } catch (error) {
+                        console.error('Error submitting form:', error);
+                        alert('There was an issue submitting your response. Please try again later.');
+                    }
+                });
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    function getUrlParameter(name) {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        return urlParams.get(name);
+                    }
+
+                    // List of parameters to fetch
+                    const parameters = ["invite", "fs", "n", "e1", "e2"];
+                    
+                    parameters.forEach(param => {
+                        const value = getUrlParameter(param);
+                        if (value) {
+                            localStorage.setItem(param, value);  // Store parameter in localStorage
+                        }
                     });
 
-                    // Show thank-you message and hide form
-                    document.getElementById('rsvp-form').style.display = 'none';
-                    document.getElementById('thank-you-message').style.display = 'block';
+                    // Retrieve stored values
+                    const storedInvite = localStorage.getItem("invite");
+                    const storedFs = localStorage.getItem("fs");
+                    const storedN = localStorage.getItem("n");
+                    const storedE1 = localStorage.getItem("e1");
+                    const storedE2 = localStorage.getItem("e2");
 
-                } catch (error) {
-                    console.error('Error submitting form:', error);
-                    alert('There was an issue submitting your response. Please try again later.');
-                }
-            });
+                    // DOM Elements
+                    const welcomeMessage = document.getElementById("welcome-message");
 
-            document.addEventListener("DOMContentLoaded", function () {
-                function getUrlParameter(name) {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    return urlParams.get(name);
-                }
 
-                // Check the URL for "invite" parameter
-                const inviteType = getUrlParameter("invite");
+                    // Get form containers
+                    const defaultForm = document.getElementById("default-form");
+                    const customForm = document.getElementById("custom-form");
 
-                if (inviteType) {
-                    // Store the invite type in localStorage
-                    localStorage.setItem("inviteType", inviteType);
-                }
+                    function toggleFormVisibility(showCustomForm) {
+                        if (showCustomForm) {
+                            if (customForm) {
+                                customForm.style.display = "block";
+                                enableInputs(customForm);
 
-                // Retrieve stored invite type
-                const storedInvite = localStorage.getItem("inviteType");
+                                // Show Welcome Message
+                                welcomeMessage.style.display = "block";
+                                welcomeMessage.innerHTML = `<span class="welcome-highlight">Welcome, ${storedN}!</span> We're thrilled to celebrate this joyous occasion with you.`;
 
-                // Hide question #4 if invite type is "wedding"
-                if (storedInvite === "wedding") {
-                    document.getElementById("weddingAttendeesLabel").style.display = "none";
-                    document.getElementById("wedding-attendees").style.display = "none";
+                                addGuestCount();
 
-                    // Set the input value to zero
-                    document.getElementById("wedding-attendees").value = "0";
-                }
-                // UNHIDE question #4 if "invite=wedding-celebrations"
-                else if (storedInvite === "wedding-celebrations") {
-                    document.getElementById("weddingAttendeesLabel").style.display = "block";
-                    document.getElementById("wedding-attendees").style.display = "block";
-                }
-            });
+                                document.querySelector("#custom-form #family-side").value = storedFs === "s" ? "Sanam's Side" : "Pranav's Side";
+                                document.querySelector("#custom-form #full-name").value = storedN || "";
+                                document.querySelector("#custom-form #contact-number").value = "0";
+                            }
+                            if (defaultForm) {
+                                defaultForm.style.display = "none";
+                                disableInputs(defaultForm);
+                            }
+                        } else {
+                            if (customForm) {
+                                customForm.style.display = "none";
+                                disableInputs(customForm);
+                            }
+                            if (defaultForm) {
+                                defaultForm.style.display = "block";
+                                enableInputs(defaultForm);
+                            }
+                        }
+                        hideOtherEvents();
+                    }
+
+                    function disableInputs(formElement) {
+                        if (formElement) {
+                            formElement.querySelectorAll("input, select, textarea").forEach(input => {
+                                input.disabled = true;
+                            });
+                        }
+                    }
+
+                    function enableInputs(formElement) {
+                        if (formElement) {
+                            formElement.querySelectorAll("input, select, textarea").forEach(input => {
+                                input.disabled = false;
+                            });
+                        }
+                    }
+
+                    function hideOtherEvents(){
+                        // Hide question #4 if invite type is "wedding"
+                        if (storedInvite === "wedding") {
+                            console.log("in enable other events wedding");
+                            document.getElementById("weddingAttendeesLabel").style.display = "none";
+                            document.getElementById("wedding-attendees").style.display = "none";
+
+                            document.querySelector("#custom-form #weddingAttendeesLabel").style.display = "none";
+                            document.querySelector("#custom-form #wedding-attendees").style.display = "none";
+
+                            // Set the input value to zero
+                            document.getElementById("wedding-attendees").value = "0";
+                            document.querySelector("#custom-form #wedding-attendees").value = "0";
+                        }
+                    }
+
+                    function addGuestCount() {
+                        if (storedE1) {
+                            populateDropdown("#custom-form #wedding-attendees", storedE1);
+                        }
+                        if (storedE2) {
+                            populateDropdown("#custom-form #attendees", storedE2);
+                        }
+
+                        function populateDropdown(selectSelector, maxValue) {
+                            const select = document.querySelector(selectSelector);
+                            if (!select) {
+                                console.error(`Dropdown not found: ${selectSelector}`);
+                                return;
+                            }
+
+                            select.innerHTML = ""; // Clear existing options
+
+                            // Create "Not Attending" option
+                            const notAttendingOption = document.createElement("option");
+                            notAttendingOption.value = "0";
+                            notAttendingOption.textContent = "Not Attending";
+                            select.appendChild(notAttendingOption);
+
+                            // Create options dynamically up to maxValue
+                            for (let i = 1; i <= maxValue; i++) {
+                                const option = document.createElement("option");
+                                option.value = i.toString();
+                                option.textContent = `${i} ${i === 1 ? "Person" : "People"} Will Attend`;
+                                select.appendChild(option);
+                            }
+                        }
+                    }
+
+                    // Toggle forms based on URL parameter "n"
+                    toggleFormVisibility(!!storedN);
+                    
+                });
                 
             </script>  
             
